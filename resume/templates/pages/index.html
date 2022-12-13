@@ -1,0 +1,200 @@
+{% extends 'master/master.html' %}
+{% block content %}
+{% load static %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+       {%if user.is_authenticated %}
+        <h1 class="h3 mb-0 " style="color:#001C4B;"><b>Welcome,  {{user|upper}}</b></h1>
+        {%else%}
+        <h1 class="h3 mb-0 " style="color:#001C4B;">Welcome, User</h1>
+        {%endif %}
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" style="background-color:#001C4B;"> 
+            <i class="fas fa-download fa-sm text-white-50" ></i> Generate Resume</a>
+    </div>
+
+    <!-- Content Row -->
+    {% if user.is_authenticated %}
+    <div class="row">
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <a class="nav-link" href="{%url 'resumeform' %}">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary mb-1">
+                                    <h3 style="color:#001C4B;"><b>Create Resume</b> </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-5 col-md-6 mb-4">
+            <a class="nav-link" href="{%url 'age_gender' %}">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary mb-1">
+                                    <h3 style="color:#001C4B;"><b>Predict your Personality</b> </h3></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Pending Requests Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <center>
+                            <div class="text-xs font-weight-bold  text-uppercase mb-4" style="color:#001C4B;">Current Nepali Time
+                            </div>
+                            <script>
+                                function startTime() {
+                                  var today = new Date();
+                                  var h = today.getHours();
+                                  var m = today.getMinutes();
+                                  var s = today.getSeconds();
+                                  m = checkTime(m);
+                                  s = checkTime(s);
+                                  document.getElementById('txt').innerHTML =
+                                  h + ":" + m + ":" + s;
+                                  var t = setTimeout(startTime, 500);
+                                }
+                                function checkTime(i) {
+                                  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                                  return i;
+                                }
+                                </script>
+                                
+                            <body onload="startTime()">
+
+                                <div id="txt"></div>
+                                
+                                </body>
+                            </center>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-4 col-md-6 mb-4">
+            <a class="nav-link" href="{%url 'login'%}">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary mb-1">
+                                    <h3 style="color:#001C4B;">Create Resume </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-5 col-md-6 mb-4">
+            <a class="nav-link" href="{%url 'login' %}">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success mb-1">
+                                    <h3 style="color:#001C4B;">Predict your Personality </h3></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+    <!-- Content Row -->
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Content Column -->
+        <div class="col-lg-6 mb-4">
+            <!-- Color System -->
+            <div class="row">
+                {% for sdata in personalinfodata %}
+                <div class="col-lg-6 mb-4">
+                {% if sdata.template.id == 1 %}
+                   <a class="nav-link" href="{%url 'templates' sdata.id %}">
+                {% elif sdata.template.id == 2 %}
+                   <a class="nav-link" href="{%url 'templates1' sdata.id %}">
+                {% elif sdata.template.id == 3 %}
+                    <a class="nav-link" href="{%url 'templates2' sdata.id %}">
+                {% elif sdata.template.id == 4 %}
+                    <a class="nav-link" href="{%url 'templates4' sdata.id %}">
+                {% elif sdata.template.id == 5 %}
+                    <a class="nav-link" href="{%url 'templates5' sdata.id %}">
+                {% else %}
+                    <a class="nav-link" href="{%url 'templates' sdata.id %}">
+                {%endif%}
+                        <div class="card  border-left-warning  text-white shadow" style="background-color:#ecf7fc;">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    
+                                    <div class="col mr-2">
+                                        {% if sdata.image %}
+                                        <div><center><img  width="50" height="60" style="border-radius: 50%;"  src="{{sdata.image.url}}" alt="img"></center></div><br>
+                                        {%else%}
+                                        <div><center><img  width="50" height="50" style="border-radius: 50%;"  src="{% static 'assets/img/default.png' %}" alt="img"></center></div><br>
+                                        {% endif %}
+                                       <center><div class="text-white-100 small" style="color:#001C4B;">
+                                            <h5><b>{{sdata.firstname | upper}} {{sdata.lastname | upper}}</b></h5>
+                                                <p><b>{{sdata.email}}</b></p></div></center> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <center>
+                    <div class="col-lg-6 mb-4 center" style="margin-top:-6px">
+                    <a class="btn btn-primary" href="{%url 'update_resume' sdata.id %}"><i class="fa fa-edit" style="color:#fff"></i></a>
+                    <a class="btn btn-danger" href="{%url 'delete_resume' sdata.id %}"><i class="fa fa-trash" style="color:#fff"></i></a>
+                    </div></center>
+                </div>
+                {% endfor %}
+        
+            </div>
+        </div>
+        <div style="margin-left: auto" class="col-lg-4 mb-4">
+            <!-- Approach -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold " style="color: #001C4B;"><marquee direction = "right" behavior = "alternate">Today's Date</marquee></h6>
+                </div>
+                <div class="card-body">
+                    <iframe src="https://www.hamropatro.com/widgets/calender-medium.php" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" style="border:none; overflow:hidden; width:295px; height:385px;" allowtransparency="true"></iframe>
+                </div>
+            </div>
+
+        </div>
+       
+        
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+{% endblock %}
